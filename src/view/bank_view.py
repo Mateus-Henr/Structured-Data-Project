@@ -5,11 +5,10 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-from controller.alios import ALIOS, Alios
 from controller.mercado_pago import PixMercadoPago, MERCADO_PAGO
 from model.pdf import QR_PDF, create_qrcode_pdf, create_payment_validation_code
-from model.printer import Printer
 from db.bank_dao import BankDAO
+from model.error import popup
 import io
 
 BANK_SCREEN = 0
@@ -29,11 +28,9 @@ class Application(tk.Tk):
         self.add_bank_window = None
         self.tabs = None
         self.qr_code_label = None
-        self.printer = Printer()
         self.value = None
         self.api = None
         self.bank = None
-        self.slprinter = 0
         self.event = threading.Event()
 
         self.initialize_app()
@@ -54,7 +51,6 @@ class Application(tk.Tk):
         self.create_qr_code_tab()
         self.create_confirmation_tab()
         self.create_add_bank_tab()
-        self.create_printer_tab()
 
         self.tabs.select(BANK_SCREEN)
 
@@ -129,7 +125,6 @@ class Application(tk.Tk):
 
     def print_confirmation(self):
         create_payment_validation_code(self.api.pix, self.bank)
-        self.printer.print_file(QR_PDF)
         os.remove(QR_PDF)
 
     def create_add_bank_tab(self):
@@ -155,7 +150,6 @@ class Application(tk.Tk):
 
         treeview = ttk.Treeview(tab)
         treeview.insert("", "end", text="Mercado Pago")
-        treeview.insert("", "end", text="Ailos")
 
         def select_bank(event):
             selection = treeview.item(treeview.focus())["text"]
@@ -163,8 +157,6 @@ class Application(tk.Tk):
 
             if selection == "Mercado Pago":
                 self.create_mercado_pago_fields_window()
-            elif selection == "Ailos":
-                self.load_ailos_fields_window()
 
         treeview.bind("<<TreeviewSelect>>", select_bank)
 
@@ -184,12 +176,12 @@ class Application(tk.Tk):
 
             # Validate the values
             if not name or not api_key or not value:
-                self.printer.exibir_popup_mensagem_erro("Please fill in all the fields.")
+                popup("Please fill in all the fields.")
                 return
             try:
                 BankDAO.insert_bank(name, float(value), api_key, bank_name)
             except ValueError:
-                self.printer.exibir_popup_mensagem_erro("Valor inválido")
+                popup("Valor inválido")
                 return
 
             # Close the fields window
@@ -222,28 +214,6 @@ class Application(tk.Tk):
     def create_mercado_pago_fields_window(self):
         self.create_bank_fields_window(MERCADO_PAGO)
 
-    def load_ailos_fields_window(self):
-        self.create_bank_fields_window(ALIOS)
-
-    def create_printer_tab(self):
-        tab = ttk.Frame(self.tabs)
-        self.tabs.add(tab, text="Impressoras")
-
-        p_list = self.printer.list_printers()
-
-        label = tk.Label(tab, text="Selecione uma impressora: ", font=("Arial", 16))
-        label.grid(row=0, column=0, sticky="w")
-
-        for i, printer in enumerate(p_list):
-            label = tk.Label(tab, text="{}-{}".format(i, printer), font=("Arial", 16))
-            label.grid(row=i + 1, column=0, sticky="w")
-
-        self.slprinter = tk.Entry(tab, font=("Arial", 16))
-        self.slprinter.grid(row=len(p_list) + 1, column=0, sticky="w")
-        bt = tk.Button(tab, text="Modificar",
-                       command=lambda: self.printer.set_default_printer(self.slprinter.get()), bg="lightgray")
-        bt.grid(row=len(p_list) + 2, column=0, sticky="w")
-
     def unload_fields(self):
         self.tabs.forget(self.tabs.select())
 
@@ -252,8 +222,6 @@ class Application(tk.Tk):
         self.tabs.add(tab, text="Confirmação")
         value_label = tk.Label(tab, text="Pagamento Aprovado", font=("Arial", 16))
         value_label.pack(pady=50)
-        print_button = tk.Button(tab, text="Imprimir", command=self.print_confirmation, bg="lightgray")
-        print_button.pack(pady=5)
 
         cancel_button = tk.Button(tab, text="Voltar", command=self.return_to_initial_screen, bg="lightgray")
         cancel_button.pack(pady=5)
@@ -291,13 +259,11 @@ class Application(tk.Tk):
             value = float(self.value.get().replace(",", "."))
             if self.bank.bank_type == MERCADO_PAGO:
                 self.api = PixMercadoPago(value, self.bank)
-            elif self.bank.bank_type == ALIOS:
-                self.api = Alios(value, self.bank)
             else:
-                self.printer.exibir_popup_mensagem_erro("Banco não suportado")
+                popup("Banco não suportado")
         except Exception as e:
             print(e)
-            self.printer.exibir_popup_mensagem_erro("Erro ao gerar QR Code")
+            popup("Erro ao gerar QR Code")
             self.return_to_initial_screen()
             return
         self.thread = threading.Thread(target=self.check_pix_status)
@@ -343,5 +309,4 @@ class Application(tk.Tk):
             self.qr_code_label.image = result_image
 
             create_qrcode_pdf(self.api.pix)
-            self.printer.print_file(QR_PDF)
             os.remove(QR_PDF)
