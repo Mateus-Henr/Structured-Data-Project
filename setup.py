@@ -9,10 +9,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         'peewee',
-        'psycopg2',
+        'psycopg2-binary',
         'mercadopago',
         'pillow',
-        'pywin32',
         'fpdf',
         'requests'
     ],
