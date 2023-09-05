@@ -41,7 +41,7 @@ class Application(tk.Tk):
         self.create_widgets()
         self.tabs.pack(expand=True, fill="both")
         self.tabs.bind("<<NotebookTabChanged>>", self.tab_changed)
-        self.tabs.tab(VALUE_SCREEN, state="disabled")
+        # self.tabs.tab(VALUE_SCREEN, state="disabled")
         self.tabs.tab(QR_CODE_SCREEN, state="disabled")
         self.tabs.tab(CONFIRMATION_SCREEN, state="disabled")
 
@@ -72,13 +72,6 @@ class Application(tk.Tk):
                 .pack(pady=5)
 
         tk.Button(self.bank_tab, text="Adicionar Banco", command=lambda: self.tabs.select(ADD_BANK_SCREEN),
-                  bg="lightgray") \
-            .pack(pady=0, side="left")
-
-        # Adiciona um espaço entre os botões
-        tk.Label(self.bank_tab, text=" ", width=5).pack(side="left")
-
-        tk.Button(self.bank_tab, text="Mudar Impressora", command=lambda: self.tabs.select(PRINTERS_SCREEN),
                   bg="lightgray") \
             .pack(pady=0, side="left")
 

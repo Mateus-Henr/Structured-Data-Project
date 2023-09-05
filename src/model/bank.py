@@ -14,3 +14,8 @@ class Bank(Model):
     class Meta:
         table_name = "dav"
         database = db
+
+
+db.connect()
+db.create_tables([Bank])
+db.close()
