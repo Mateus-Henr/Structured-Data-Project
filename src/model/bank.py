@@ -6,9 +6,7 @@ db = PostgresqlDatabase(database='unico', user='postgres', password='postgres', 
 class Bank(Model):
     id = AutoField()
     name = CharField()
-    valor = FloatField()
     api_key = CharField()
-    pix_key = CharField()
     bank_type = CharField()
 
     class Meta:

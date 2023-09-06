@@ -8,6 +8,7 @@ from PIL import Image, ImageTk
 from controller.mercado_pago import PixMercadoPago, MERCADO_PAGO
 from model.pdf import QR_PDF, create_qrcode_pdf, create_payment_validation_code
 from db.bank_dao import BankDAO
+from db.product_dao import ProductDAO
 from model.error import popup
 import io
 
