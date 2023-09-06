@@ -4,10 +4,11 @@ db = PostgresqlDatabase(database='unico', user='postgres', password='postgres', 
 
 class Transacao(Model):
     id = AutoField()
-    nome = CharField()
-    chave_pix = CharField()
+    id_transacao = CharField()
+    conta_origem = CharField()
+    bank_name = CharField()
+    date = CharField()
     valor = FloatField()
-    data = CharField()
     class Meta:
         table_name = "transacao"
         database = db

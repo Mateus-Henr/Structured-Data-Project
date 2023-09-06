@@ -14,5 +14,5 @@ class TransacaoDAO:
         return Transacao.select()
 
     @staticmethod
-    def insert_trasacao(nome, chave_pix, valor, data):
-        return Transacao.create(nome=nome, chave_pix=chave_pix, valor=valor, data=data)
+    def insert_trasacao(id_transacao, conta_origem, bank_name, date, valor):
+        return Transacao.create(id_transacao=id_transacao, conta_origem=conta_origem, bank_name=bank_name, date=date, valor=valor)
