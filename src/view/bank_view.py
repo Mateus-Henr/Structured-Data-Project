@@ -9,6 +9,7 @@ from controller.mercado_pago import PixMercadoPago, MERCADO_PAGO
 from model.pdf import QR_PDF, create_qrcode_pdf, create_payment_validation_code
 from db.bank_dao import BankDAO
 from db.product_dao import ProductDAO
+from db.transacao_dao import TransacaoDAO
 from model.error import popup
 import io
 
@@ -120,6 +121,7 @@ class Application(tk.Tk):
     def print_confirmation(self):
         create_payment_validation_code(self.api.pix, self.bank)
         os.remove(QR_PDF)
+
 
     def create_add_bank_tab(self):
         tab = ttk.Frame(self.tabs)
