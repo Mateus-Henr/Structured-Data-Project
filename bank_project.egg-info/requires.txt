@@ -1,0 +1,6 @@
+peewee
+psycopg2-binary
+mercadopago
+pillow
+fpdf
+requests
