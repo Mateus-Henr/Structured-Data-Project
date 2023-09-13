@@ -17,3 +17,4 @@ class Bank(Model):
 db.connect()
 db.create_tables([Bank])
 db.close()
+ 

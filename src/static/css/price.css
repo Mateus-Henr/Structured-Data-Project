@@ -1,6 +1,8 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
 body {
     background-color: #141414;
-    background-image: url("../imagens/fundo.png");
+    background-image: url("../images/fundo.png");
     background-position: left; /* Define a posição da imagem como canto superior esquerdo */
     background-repeat: repeat; /* Impede a repetição da imagem */
     background-size: 2000px;
@@ -20,7 +22,7 @@ body {
 header {
     background-position: right top; /* Define a posição da imagem como canto superior esquerdo */
     background-repeat: no-repeat; /* Impede a repetição da imagem */
-    background-size: auto; 
+    background-size: auto;
     text-align: left;
     padding: 20px;
     color: white;
@@ -55,7 +57,7 @@ main {
     min-height: calc(100vh - 325px); /* Ajusta a altura da tela, subtraindo a altura do header */
 }
 
-input{
+input {
     margin: 10px 0;
 }
 
@@ -109,9 +111,8 @@ input[type="submit"][name="cancelarTran"] {
     font-size: 40px;
 }
 
-.priceButtunsContainer input{
+.priceButtunsContainer input {
     margin-left: 20px;
     margin-right: 20px;
 }
 
-@import "https://www.nerdfonts.com/assets/css/webfont.css"
