@@ -5,4 +5,5 @@ def config():
     terminal_view = TerminalView()
     terminal_view.main_loop()
 
+
 config()

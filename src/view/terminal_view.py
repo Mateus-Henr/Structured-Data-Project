@@ -16,6 +16,8 @@ def print_help():
           " \\v -> view all products\n"
           " \\v [id] -> view product\n"
           " \\r [id] -> remove item\n"
+          " \\t -> view all transitions\n"
+          " \\t [id] -> view transition\n"
           " \q -> quit\n")
 
 
@@ -47,9 +49,15 @@ class TerminalView:
             if result[0] == 3:
                 print()
                 for row in result[1]:
-                    print("{} | {} | {} | {}".format(row.id, row.nome, row.valor, row.estoque))
+                    print("| {:>4} | {:<20} | {:>8} | {:>4} |".format(row.id, row.nome, row.valor, row.estoque))
                 print()
             if result[0] == 4:
                 print("\nProduto atualizado\n")
             if result[0] == 5:
                 print("\nProduto removido\n")
+            if result[0] == 6:
+                print()
+                for row in result[1]:
+                    print("| {:>4} | {:>36} | {:>15} | {:<20} | {:>10} | {:>8}".format(row.id, row.id_transacao, row.conta_origem, row.bank_name, row.date, row.valor))
+            if result[0] == 7:
+                print("\nComando inválido\n")

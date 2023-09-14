@@ -1,5 +1,6 @@
 from peewee import PostgresqlDatabase
 from src.db.product_dao import ProductDAO
+from src.db.transacao_dao import TransacaoDAO
 
 def start_db():
     db = PostgresqlDatabase(database='unico', user='postgres', password='postgres', host='localhost', port=5432)
@@ -17,6 +18,7 @@ def execute(command, db):
         return [1]
 
     productdao = ProductDAO
+    transacaodao = TransacaoDAO
 
     clen = len(content)
 
@@ -43,3 +45,11 @@ def execute(command, db):
     if content[0] == "\\r" and clen == 2:
         productdao.remove_produto(content[1])
         return [5]
+    if content[0] == "\\t":
+        if clen == 1:
+            rows = transacaodao.get_transacoes()
+            return [3, rows]
+        if clen == 2:
+            rows = transacaodao.get_transacao(content[1])
+            return [3, rows]
+    return [7]

@@ -14,5 +14,9 @@ class TransacaoDAO:
         return Transacao.select()
 
     @staticmethod
+    def get_transacao(id):
+        return Transacao.select().where(Transacao.id == id)
+
+    @staticmethod
     def insert_trasacao(id_transacao, conta_origem, bank_name, date, valor):
         return Transacao.create(id_transacao=id_transacao, conta_origem=conta_origem, bank_name=bank_name, date=date, valor=valor)
