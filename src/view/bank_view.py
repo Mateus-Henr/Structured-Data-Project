@@ -175,7 +175,7 @@ class Application(tk.Tk):
                 popup("Please fill in all the fields.")
                 return
             try:
-                BankDAO.insert_bank(name, float(value), api_key, bank_name)
+                BankDAO.update_bank(name, float(value), api_key, bank_name)
             except ValueError:
                 popup("Valor inválido")
                 return

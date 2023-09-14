@@ -14,5 +14,19 @@ class BankDAO:
         return Bank.select()
 
     @staticmethod
-    def insert_bank(name, valor, api_key, bank_type):
-        return Bank(name=name, valor=valor, api_key=api_key, bank_type=bank_type).save()
+    def update_bank(name, api_key, bank_type):
+        # Find the first bank that matches the conditions (e.g., by name)
+        bank_to_update = Bank.get_or_none(name=name)
+
+        if bank_to_update:
+            # Update the bank object with the new values
+            bank_to_update.api_key = api_key
+            bank_to_update.bank_type = bank_type
+            # Save the updated bank object to the database
+            bank_to_update.save()
+            # Return the updated bank object
+            return bank_to_update
+        else:
+            # Handle the case where no matching bank was found
+            return None
+
