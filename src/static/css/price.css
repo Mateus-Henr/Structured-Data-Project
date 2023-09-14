@@ -1,0 +1,118 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
+body {
+    background-color: #141414;
+    background-image: url("../images/fundo.png");
+    background-position: left; /* Define a posição da imagem como canto superior esquerdo */
+    background-repeat: repeat; /* Impede a repetição da imagem */
+    background-size: 2000px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+/* Header */
+header {
+    background-position: right top; /* Define a posição da imagem como canto superior esquerdo */
+    background-repeat: no-repeat; /* Impede a repetição da imagem */
+    background-size: auto;
+    text-align: left;
+    padding: 20px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
+    font-size: 24px;
+    min-width: 800px;
+    height: 200px;
+}
+
+header img {
+    max-width: 150px;
+    float: left;
+    margin: 20px 20px 0 -150px;
+}
+
+/* Footer */
+footer {
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    color: black;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Main */
+main {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    min-height: calc(100vh - 325px); /* Ajusta a altura da tela, subtraindo a altura do header */
+}
+
+input {
+    margin: 10px 0;
+}
+
+input[type="text"]::placeholder {
+    color: #d4d4d4; /* Cor do texto de fundo */
+    font-weight: bold;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+/* Estilos para a div que envolve as caixas de texto */
+.textboxContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Espaçamento inferior para separar das caixas de texto */
+}
+
+/* Estilos para as caixas de texto */
+input[type="text"] {
+    background-color: #9b9b9b; /* Cor de fundo laranja */
+    color: #141414; /* Cor do texto branco */
+    padding: 20px 40px; /* Espaçamento interno */
+    border: none; /* Remova as bordas */
+    border-radius: 40px; /* Cantos arredondados */
+    margin: 10px; /* Espaçamento horizontal entre as caixas de texto */
+    font-size: 20px;
+}
+
+/* Estilos para a div que envolve os botões */
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilos para os botões */
+input[type="submit"] {
+    background-color: #fff;
+    cursor: pointer;
+    color: black;
+    border: none; /* Remova as bordas */
+    padding: 10px;
+    font-size: 30px;
+    border-radius: 5px;
+    margin: 10px; /* Espaçamento horizontal entre os botões */
+}
+
+/* Estilos para o botão "Cancelar Transação" */
+input[type="submit"][name="cancelarTran"] {
+    background-color: black;
+    color: white;
+    font-size: 40px;
+}
+
+.priceButtunsContainer input {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+

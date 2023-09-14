@@ -1,8 +1,9 @@
 from src.model.product import Product  # Importe o modelo do Produto
 
+
 class ProductDAO:
     @staticmethod
-    def get_produto_by_id(produto_id):
+    def get_produto_by_id(produto_id: int):
         try:
             return Product.get_by_id(produto_id)
         except Product.DoesNotExist:

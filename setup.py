@@ -13,6 +13,7 @@ setup(
         'mercadopago',
         'pillow',
         'fpdf',
-        'requests'
+        'requests',
+        'flask'
     ],
 )

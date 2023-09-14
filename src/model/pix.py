@@ -15,4 +15,4 @@ class Pix:
         """
         Generates a JPEG image from the base64 encoded QR code.
         """
-        return BytesIO(base64.b64decode(self.qr_code_base64))
+        return base64.b64decode(self.qr_code_base64)

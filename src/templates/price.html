@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vulture's PIX</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/price.css">
+</head>
+<body>
+<header class="box">
+    <img src="../static/images/logo.png" alt="Logo da Vulture's PIX">
+</header>
+
+<main>
+    <form class="box" method="POST">
+        <div id="cont" class="dualButtonContainer">
+            <label>
+                <input class="dualButtonBox" type="text" name="product_id" placeholder="ID produto">
+            </label>
+            <label>
+                <input class="dualButtonBox" type="text" name="quantity" placeholder="Quantidade">
+            </label>
+        </div>
+        <div class="priceButtunsContainer">
+            <input type="submit" name="insert_new_product" value="Adicionar +" formaction="/insert-product">
+            <input type="submit" name="next" value="Próximo >" formaction="/buy">
+        </div>
+        <input type="submit" name="cancelarTran" value="Cancelar Transação">
+    </form>
+</main>
+
+<footer>
+    &copy; Vulture's PIX, julho 2077, todos os direitos reservados a ninguém.
+</footer>
+</body>
+</html>
