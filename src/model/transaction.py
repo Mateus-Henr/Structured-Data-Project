@@ -2,18 +2,21 @@ from peewee import PostgresqlDatabase, Model, AutoField, CharField, FloatField, 
 
 db = PostgresqlDatabase(database='unico', user='postgres', password='postgres', host='localhost', port=5432)
 
-class Transacao(Model):
+
+class Transaction(Model):
     id = AutoField()
-    id_transacao = CharField()
-    conta_origem = CharField()
+    transaction_id = CharField()
+    source_account = CharField()
     bank_name = CharField()
     date = CharField()
-    valor = FloatField()
+    value = FloatField()
     JSON = TextField()
+
     class Meta:
-        table_name = "transacao"
+        table_name = "transaction"
         database = db
 
+
 db.connect()
-db.create_tables([Transacao])
+db.create_tables([Transaction])
 db.close()

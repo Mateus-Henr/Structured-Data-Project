@@ -4,7 +4,7 @@ import os
 from controller.pix_interface import PixInterface
 from model.bank import Bank
 from model.pix import Pix
-from db.transacao_dao import TransacaoDAO
+from db.transacao_dao import TransactionDAO
 
 MERCADO_PAGO = "MERCADO PAGO"
 
@@ -64,7 +64,7 @@ class PixMercadoPago(PixInterface):
                 JSON = payment["response"]
 
 
-                TransacaoDAO.insert_trasacao(transaction_id, account_id, bank_name, date_approved, total_paid_amount, JSON)
+                TransactionDAO.insert_transaction(transaction_id, account_id, bank_name, date_approved, total_paid_amount, JSON)
 
         else:
             self.status = "pending"

@@ -10,8 +10,9 @@ app = Flask(__name__, template_folder="templates")
 app.config['STATIC_URL_PATH'] = '/static'
 
 products = []
-bank = BankDAO.update_bank("MB", "", "MB")
-print(bank.api_key)
+
+
+# bank = BankDAO.get_bank()
 
 
 @app.route('/')
@@ -37,7 +38,16 @@ def qrcode_page():
 @app.route('/submit-info', methods=['POST'])
 def submit_info():
     if request.method == 'POST':
-        bank = BankDAO.update_bank(request.form.get("bank_name"), request.form.get("api_key"), "MB")
+        key = request.form.get("api_key")
+        bank_name = request.form.get("bank_name")
+        bank = BankDAO.update_or_create_bank(bank_name, key)
+
+        try:
+            PixMercadoPago(1, bank)
+        except Exception as e:
+            print(e)
+            return redirect(url_for("initial_page"))
+
         return render_template("price.html")
 
 
@@ -49,14 +59,21 @@ def insert_product():
         if product is not None:
             quantity = int(request.form.get("quantity"))
 
-            if quantity > product.estoque:
-                print("ERRO")
+            if quantity > product.inventory:
+                print("ERRO: Sem estoque")
                 return redirect(url_for("price_page"))
 
-            products.append({"quantity": quantity, "product": product})
-            print(products)
-            return redirect(url_for("price_page"))
+            for prod in products:
+                if prod["product"].id == product.id:
+                    if prod["quantity"] + quantity > product.inventory:
+                        print("ERRO")
+                        return redirect(url_for("price_page"))
+                    else:
+                        prod["quantity"] += quantity
+                        print(products)
+                        return redirect(url_for("price_page"))
 
+            products.append({"product": product, "quantity": quantity})
         print(products)
         return redirect(url_for("price_page"))
 
@@ -65,10 +82,11 @@ def insert_product():
 def buy_products():
     if request.method == 'POST':
         # TODO: Create a function to decrease the inventory quantity
-        total_price = sum(product["product"].valor * product["quantity"] for product in products)
+        total_price = sum(product["product"].value * product["quantity"] for product in products)
 
-        pix = PixMercadoPago(total_price, bank).create_pix(total_price)
+        pix = PixMercadoPago(total_price, BankDAO.get_bank()).pix
 
         return send_file(io.BytesIO(pix.generate_jpg_from_qr_code64()), mimetype='image/jpeg')
+
 
 app.run()

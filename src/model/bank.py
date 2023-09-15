@@ -7,7 +7,6 @@ class Bank(Model):
     id = AutoField()
     name = CharField()
     api_key = CharField()
-    bank_type = CharField()
 
     class Meta:
         table_name = "dav"

@@ -1,18 +1,20 @@
-from src.model.transacao import Transacao
+from src.model.transaction import Transaction
 
-class TransacaoDAO:
+
+class TransactionDAO:
     @staticmethod
-
-    def get_transacao_by_id(transacao_id):
+    def get_transaction_by_id(transaction_id):
         try:
-            return Transacao.get_by_id(transacao_id)
-        except Transacao.DoesNotExist:
+            return Transaction.get_by_id(transaction_id)
+        except Transaction.DoesNotExist:
             return None
 
     @staticmethod
-    def get_transacoes():
-        return Transacao.select()
+    def get_transaction():
+        return Transaction.select()
 
     @staticmethod
-    def insert_trasacao(id_transacao, conta_origem, bank_name, date, valor, JSON):
-        return Transacao.create(id_transacao=id_transacao, conta_origem=conta_origem, bank_name=bank_name, date=date, valor=valor, JSON=JSON)
+    def insert_transaction(transaction_id, source_account, bank_name, date, value, JSON):
+        return Transaction.create(transaction_id=transaction_id, source_account=source_account, bank_name=bank_name,
+                                  date=date,
+                                  value=value, JSON=JSON)
