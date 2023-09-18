@@ -18,3 +18,7 @@ class TransactionDAO:
         return Transaction.create(transaction_id=transaction_id, source_account=source_account, bank_name=bank_name,
                                   date=date,
                                   value=value, JSON=JSON)
+
+    @staticmethod
+    def get_transactions():
+        return Transaction.select()

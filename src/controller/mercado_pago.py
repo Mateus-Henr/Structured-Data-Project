@@ -63,8 +63,8 @@ class PixMercadoPago(PixInterface):
 
                 JSON = payment["response"]
 
-
-                TransactionDAO.insert_transaction(transaction_id, account_id, bank_name, date_approved, total_paid_amount, JSON)
+                TransactionDAO.insert_transaction(transaction_id, account_id, bank_name, date_approved,
+                                                  total_paid_amount, JSON)
 
         else:
             self.status = "pending"
