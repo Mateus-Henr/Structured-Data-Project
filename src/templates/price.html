@@ -27,6 +27,9 @@
         </div>
         <input type="submit" name="cancelarTran" value="Cancelar Transação">
     </form>
+    {% for item in products %}
+        <li>{{ item.product.name }} - {{ item.quantity }}</li>
+    {% endfor %}
 </main>
 
 <footer>
