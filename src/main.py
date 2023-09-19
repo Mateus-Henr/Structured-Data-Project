@@ -99,7 +99,7 @@ def buy_products():
         new_size = (400, 400)  # Change these values to your desired size
 
         # Resize the image
-        image = image.resize(new_size, Image.ANTIALIAS)
+        image = image.resize(new_size)
 
         # Save the resized image
         with open(os.path.dirname(__file__) + "/static/images/image.jpg", "wb") as image_file:
@@ -107,5 +107,11 @@ def buy_products():
 
         return render_template("qrcode.html")
 
+
+@app.route('/cancel', methods=['POST'])
+def cancel_buy():
+    if request.method == 'POST':
+        products.clear()
+        return redirect(url_for("initial_page"))
 
 app.run()
