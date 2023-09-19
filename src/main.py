@@ -92,8 +92,18 @@ def buy_products():
         if pix is None:
             return redirect(url_for("initial_page"))
 
+        image_bytes = pix.generate_jpg_from_qr_code64()
+        image = Image.open(io.BytesIO(image_bytes))
+
+        # Define the new size (width, height) in pixels
+        new_size = (400, 400)  # Change these values to your desired size
+
+        # Resize the image
+        image = image.resize(new_size, Image.ANTIALIAS)
+
+        # Save the resized image
         with open(os.path.dirname(__file__) + "/static/images/image.jpg", "wb") as image_file:
-            image_file.write(pix.generate_jpg_from_qr_code64())
+            image.save(image_file, "JPEG")
 
         return render_template("qrcode.html")
 
