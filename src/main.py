@@ -1,10 +1,14 @@
 import io
+import os
+from tempfile import NamedTemporaryFile
 
+from PIL import Image
 from flask import Flask, render_template, request, redirect, url_for, send_file
 
 from controller.mercado_pago import PixMercadoPago
 from db.bank_dao import BankDAO
 from db.product_dao import ProductDAO
+from model.pdf import create_qrcode_pdf
 
 app = Flask(__name__, template_folder="templates")
 app.config['STATIC_URL_PATH'] = '/static'
@@ -48,7 +52,7 @@ def submit_info():
             print(e)
             return redirect(url_for("initial_page"))
 
-        return render_template("price.html")
+        return render_template("price.html", products=products)
 
 
 @app.route('/insert-product', methods=['POST'])
@@ -68,14 +72,13 @@ def insert_product():
                     if prod["quantity"] + quantity > product.inventory:
                         print("ERRO")
                         return redirect(url_for("price_page"))
-                    else:
-                        prod["quantity"] += quantity
-                        print(products)
-                        return redirect(url_for("price_page"))
+
+                    prod["quantity"] += quantity
+                    return render_template("price.html", products=products)
 
             products.append({"product": product, "quantity": quantity})
-        print(products)
-        return redirect(url_for("price_page"))
+
+        return render_template("price.html", products=products)
 
 
 @app.route('/buy', methods=['POST'])
@@ -86,7 +89,13 @@ def buy_products():
 
         pix = PixMercadoPago(total_price, BankDAO.get_bank()).pix
 
-        return send_file(io.BytesIO(pix.generate_jpg_from_qr_code64()), mimetype='image/jpeg')
+        if pix is None:
+            return redirect(url_for("initial_page"))
+
+        with open(os.path.dirname(__file__) + "/static/images/image.jpg", "wb") as image_file:
+            image_file.write(pix.generate_jpg_from_qr_code64())
+
+        return render_template("qrcode.html")
 
 
 app.run()
