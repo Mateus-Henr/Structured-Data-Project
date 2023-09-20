@@ -14,8 +14,8 @@ class ProductDAO:
         return Product.select()
 
     @staticmethod
-    def insert_produto(nome, valor, estoque):
-        return Product.create(nome=nome, valor=valor, estoque=estoque)
+    def insert_produto(name, value, inventory):
+        return Product.create(name=name, value=value, inventory=inventory)
 
     @staticmethod
     def get_produto(id):
@@ -27,17 +27,17 @@ class ProductDAO:
 
     @staticmethod
     def modify_produto(id, nome, valor, estoque):
-        return Product.update({Product.nome: nome, Product.valor: valor, Product.estoque: estoque}).where(
+        return Product.update({Product.name: nome, Product.value: valor, Product.inventory: estoque}).where(
             Product.id == id).execute()
 
     @staticmethod
     def modify_produto_nome(id, nome):
-        return Product.update({Product.nome: nome}).where(Product.id == id).execute()
+        return Product.update({Product.name: nome}).where(Product.id == id).execute()
 
     @staticmethod
     def modify_produto_valor(id, valor):
-        return Product.update({Product.valor: valor}).where(Product.id == id).execute()
+        return Product.update({Product.value: valor}).where(Product.id == id).execute()
 
     @staticmethod
     def modify_produto_estoque(id, estoque):
-        return Product.update({Product.estoque: estoque}).where(Product.id == id).execute()
+        return Product.update({Product.inventory: estoque}).where(Product.id == id).execute()

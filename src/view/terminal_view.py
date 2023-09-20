@@ -49,7 +49,7 @@ class TerminalView:
             if result[0] == 3:
                 print()
                 for row in result[1]:
-                    print("| {:>4} | {:<20} | {:>8} | {:>4} |".format(row.id, row.nome, row.valor, row.estoque))
+                    print("| {:>4} | {:<20} | {:>8} | {:>4} |".format(row.id, row.name, row.value, row.inventory))
                 print()
             if result[0] == 4:
                 print("\nProduto atualizado\n")
@@ -58,8 +58,8 @@ class TerminalView:
             if result[0] == 6:
                 print()
                 for row in result[1]:
-                    print("| {:>4} | {:>36} | {:>15} | {:<20} | {:>10} | {:>8}".format(row.id, row.id_transacao,
-                                                                                       row.conta_origem, row.bank_name,
-                                                                                       row.date, row.valor))
+                    print("| {:>4} | {:>36} | {:>15} | {:<20} | {:>10} | {:>8}".format(row.id, row.transaction_id,
+                                                                                       row.source_account, row.bank_name,
+                                                                                       row.date, row.value))
             if result[0] == 7:
                 print("\nComando inválido\n")

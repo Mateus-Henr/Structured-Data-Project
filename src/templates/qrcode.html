@@ -24,5 +24,31 @@
 <footer>
     &copy; Vulture's PIX, julho 2077, todos os direitos reservados a ninguém.
 </footer>
+
+<script>
+    // Function to send a request and check the response
+    function sendRequest() {
+        // Make a POST request to your Flask endpoint
+        fetch('/confirmation', {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Check if the response is true
+            console.log(data)
+            if (data === "True") {
+                // Redirect to another page
+                window.location.href = '/finished';
+            }
+        });
+    }
+
+    // Set an interval to send requests every X milliseconds
+    const interval = setInterval(sendRequest, 1000); // Adjust the interval as needed (e.g., every second)
+</script>
 </body>
 </html>

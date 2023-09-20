@@ -10,8 +10,8 @@ class TransactionDAO:
             return None
 
     @staticmethod
-    def get_transaction():
-        return Transaction.select()
+    def get_transaction(id):
+        return Transaction.select().where(Transaction.id == id).execute()
 
     @staticmethod
     def insert_transaction(transaction_id, source_account, bank_name, date, value, JSON):

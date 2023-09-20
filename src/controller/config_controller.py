@@ -51,9 +51,9 @@ def execute(command, db):
         return [5]
     if content[0] == "\\t":
         if clen == 1:
-            rows = transacaodao.get_transacoes()
-            return [3, rows]
+            rows = transacaodao.get_transactions()
+            return [6, rows]
         if clen == 2:
             rows = transacaodao.get_transaction(content[1])
-            return [3, rows]
+            return [6, rows]
     return [7]

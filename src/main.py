@@ -1,5 +1,8 @@
 import io
 import os
+import threading
+import time
+import requests
 from tempfile import NamedTemporaryFile
 
 from PIL import Image
@@ -9,6 +12,9 @@ from controller.mercado_pago import PixMercadoPago
 from db.bank_dao import BankDAO
 from db.product_dao import ProductDAO
 from model.pdf import create_qrcode_pdf
+
+global api
+api = None
 
 app = Flask(__name__, template_folder="templates")
 app.config['STATIC_URL_PATH'] = '/static'
@@ -83,16 +89,18 @@ def insert_product():
 
 @app.route('/buy', methods=['POST'])
 def buy_products():
+    check = False
     if request.method == 'POST':
         # TODO: Create a function to decrease the inventory quantity
         total_price = sum(product["product"].value * product["quantity"] for product in products)
 
-        pix = PixMercadoPago(total_price, BankDAO.get_bank()).pix
+        global api
+        api = PixMercadoPago(total_price, BankDAO.get_bank())
 
-        if pix is None:
+        if api is None:
             return redirect(url_for("initial_page"))
 
-        image_bytes = pix.generate_jpg_from_qr_code64()
+        image_bytes = api.pix.generate_jpg_from_qr_code64()
         image = Image.open(io.BytesIO(image_bytes))
 
         # Define the new size (width, height) in pixels
@@ -107,11 +115,19 @@ def buy_products():
 
         return render_template("qrcode.html")
 
+@app.route('/confirmation', methods=["POST"])
+def check_pix_status():
+    if api is not None:
+        print(str(api))
+        return str(api.is_done())
+    return "False"
+
 
 @app.route('/cancel', methods=['POST'])
 def cancel_buy():
     if request.method == 'POST':
         products.clear()
         return redirect(url_for("initial_page"))
+
 
 app.run()
