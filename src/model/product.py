@@ -22,7 +22,7 @@ def insert_random_products():
     for _ in range(30):
         name = random.choice(
             ["Banana", "Computador", "Coxinha", "Arroz", "Feijão", "Leite", "Cerveja", "Pão", "Maçã", "Chocolate",
-             "Carne", "Batata", "Sabonete", "Água Mineral", "Sorvete", "Queijo", "Cenoura", "Sabão em Pó", "Vinho",
+             "Carne", "Batata", "Sabonete", "Playstation 5", "Sorvete", "Queijo", "Cenoura", "Sabão em Pó", "Vinho",
              "Abacaxi", "Detergente", "Sal", "Biscoitos", "Laranja", "Shampoo", "Água Sanitária", "Macarrão",
              "Melancia", "Desodorante", "Lâmpadas"])
         valor = round(random.uniform(0.01, 1.0), 2)
